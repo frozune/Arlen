@@ -11,7 +11,7 @@ public class Main {
         JDABuilder jdaBuilder = JDABuilder.createDefault("\\redacted");
 
 
-        StatusArlen sa = new StatusArlen();
+        StatusArlen sa = new arlenStatus();
         jdaBuilder.addEventListeners(sa);
 
         selfAura au = new selfAura();
