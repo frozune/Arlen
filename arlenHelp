@@ -1,0 +1,42 @@
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import java.awt.*;
+
+public class arlenHelp extends ListenerAdapter {
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent e) {
+
+        //general help
+        if ((e.getMessage().getContentRaw().equalsIgnoreCase("!help"))) {
+
+            EmbedBuilder arlenHelp;
+            arlenHelp = new EmbedBuilder();
+
+            arlenHelp.setColor(Color.red);
+            arlenHelp.setTitle("Arlen Help");
+            arlenHelp.addField("Commands List", "!au [wireshark code for self-selecting aura]", false);
+
+            e.getChannel().sendMessage(arlenHelp.build()).queue();
+
+        }
+        
+        //selfAura help
+        if ((e.getMessage().getContentRaw().startsWith("!au help"))) {
+
+            EmbedBuilder auHelp;
+            auHelp = new EmbedBuilder();
+
+            auHelp.setColor(Color.red);
+            auHelp.setTitle("Aura Help");
+            auHelp.addField("Return Values","Heal \n Mana Cost \n Duration \n Total Dodge (TDO) \n AP (AP) \n Heal Out (CHO)\n END (END)\n ? (CPO)\n HASTE (THA)\n STR (STR)" +
+                    "\n ? (SBM)\n Attack In (CAI)\n Crit Chance (TCR)\n Hit Chance (THI)\n Attack Out (CAO) \nCrit  Multiplier (SCM)\n Magic Out (CMO)", true );
+            auHelp.addField("Syntax", "!au [wireshark code for AURA ONLY!]", true);
+
+            e.getChannel().sendMessage(auHelp.build()).queue();
+
+        }
+
+    }
+}
