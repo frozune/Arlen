@@ -1,0 +1,567 @@
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import java.awt.*;
+
+public class wireShark extends ListenerAdapter {
+
+    @Override
+    public void onMessageReceived(MessageReceivedEvent e) {
+        
+        //assigning all variables used. Some are only used for testing.
+        String userInput = "";
+        String message = "";
+
+        String heal = "";
+        String healtr = "";
+
+        String tdo = "";
+        String tdotr = "";
+
+        String tha = "";
+        String thatr = "";
+
+        String cai = "";
+        String caitr = "";
+
+        String tcr = "";
+        String tcrtr = "";
+
+        String thi = "";
+        String thitr = "";
+
+        String cao = "";
+        String caotr = "";
+
+        String scm = "";
+        String scmtr = "";
+
+        String cmo = "";
+        String cmotr = "";
+
+        String name = "";
+        String nametr = "";
+
+        String mana = "";
+        String manatr = "";
+
+        String duration = "";
+        String durationtr = "";
+
+        String cho = "";
+        String chotr = "";
+
+        String sbm = "";
+        String sbmtr = "";
+
+        String cpo = "";
+        String cpotr = "";
+
+        String end = "";
+        String endtr = "";
+
+        String str = "";
+        String strtr = "";
+
+        String ap = "";
+        String aptr = "";
+
+        int tdoIndex = 0;
+        int thaIndex = 0;
+        int caiIndex = 0;
+        int tcrIndex = 0;
+        int thiIndex = 0;
+        int caoIndex = 0;
+        int scmIndex = 0;
+        int cmoIndex = 0;
+        int choIndex = 0;
+        int sbmIndex = 0;
+        int cpoIndex = 0;
+        int endIndex = 0;
+        int strIndex = 0;
+        int apIndex = 0;
+        int healIndex = 0;
+
+        int durationIndex = 0;
+        int manaIndex = 0;
+        int nameIndex = 0;
+
+        int manai = 0;
+
+        //command catalyst , !au
+        if ((e.getMessage().getContentRaw().startsWith("!au"))) {
+            userInput = e.getMessage().getContentRaw();
+
+            //heal
+            
+            healIndex = userInput.indexOf("\"hp\":");
+
+            heal = userInput.substring((healIndex + 6), (userInput.indexOf(",", healIndex)));
+            
+            if (heal.isBlank()) {
+                heal = " ";
+            } else {
+                double heald = Double.parseDouble(heal);
+                healtr = "Heal Amount: " + (heald) + "\n";
+            }
+            
+            if (heal.startsWith("xt%")) {
+                heal = "null";
+                
+            }
+
+            //duration
+
+            durationIndex = userInput.indexOf("dur\":");
+            duration = userInput.substring((durationIndex + 6), (userInput.indexOf(",", durationIndex)));
+            duration = duration.substring(0, duration.length() - 1);
+
+            if (duration.startsWith("xt%")) {
+                duration = "null";
+
+
+            }
+
+            durationtr = "Duration: " + duration + " seconds\n";
+
+            //mana
+            
+            manaIndex = userInput.indexOf("intMP\":");
+            mana = userInput.substring((manaIndex + 6), (userInput.indexOf(",", manaIndex)));
+            mana = mana.substring(1, mana.length() - 2);
+
+            //mana = 100-mana;
+            
+
+            if (mana.startsWith("xt%")) {
+                mana = "null";
+
+            }
+
+            if (mana.isBlank()) {
+                mana = " ";
+            } else {
+                double manad = Double.parseDouble(mana);
+                manad = 100-manad;
+                manatr = "Mana cost: " + (manad) + "\n";
+            }
+
+            manai = Integer.parseInt(mana);
+            manai = 100-manai;
+
+
+            //name
+            
+            nameIndex = userInput.indexOf("nam\":");
+            name = userInput.substring((nameIndex + 6), (userInput.indexOf(",", nameIndex)));
+            name = name.substring(0, name.length() - 1);
+
+            if (name.startsWith("xt%")) {
+                name = "null";
+
+
+            }
+
+            nametr = "**Aura Info For : " + name + "**\n";
+
+            //tdo
+
+            tdoIndex = userInput.indexOf("$tdo");
+            tdo = userInput.substring((tdoIndex + 6), (userInput.indexOf(",", tdoIndex)));
+
+            if (tdo != "null") {
+                tdo = tdo.substring(0,6);
+            }
+            if (tdo.startsWith("xt%")) {
+                tdo = "null";
+
+            }
+
+            tdotr = "Total Dodge (TDO) : " + tdo+"\n";
+
+            if (tdo.equalsIgnoreCase("null")) {
+                tdotr = " ";
+            }
+
+            //sbm
+
+            sbmIndex = userInput.indexOf("$sbm");
+
+            sbm = userInput.substring((sbmIndex + 6), (userInput.indexOf(",", sbmIndex)));
+
+            if (sbm != "null") {
+                sbm = sbm.substring(0,6);
+            }
+            if (sbm.contains("}")) {
+                sbm = sbm.substring(0, sbm.indexOf('}'));
+            }
+
+            if (sbm.startsWith("xt%")) {
+                sbm = "null";
+
+            }
+
+            sbmtr = "? (SBM) : " + sbm+"\n";
+            if (sbm.equalsIgnoreCase("null")) {
+                sbmtr = " ";
+            }
+
+            //tha
+
+            thaIndex = userInput.indexOf("$tha");
+
+            tha = userInput.substring((thaIndex + 6), (userInput.indexOf("}", thaIndex)));
+
+            if (tha != "null") {
+                tha = tha.substring(0,6);
+            }
+
+            if (tha.startsWith("xt%")) {
+                tha = "null";
+
+            }
+            thatr = "HASTE (THA) : " + tha+"\n";
+            if (tha.equalsIgnoreCase("null")) {
+                thatr = " ";
+            }
+
+            //cpo
+
+            cpoIndex = userInput.indexOf("$cpo");
+
+            cpo = userInput.substring((cpoIndex + 6), (userInput.indexOf(",", cpoIndex)));
+
+
+            if (cpo != "null") {
+                cpo = cpo.substring(0,6);
+            }
+
+
+            if (cpo.contains("}")) {
+                cpo = cpo.substring(0, cpo.indexOf('}'));
+            }
+
+            if (cpo.startsWith("xt%")) {
+                cpo = "null";
+
+            }
+
+            cpotr = "? (CPO) : " + cpo+"\n";
+
+            if (cpo.equalsIgnoreCase("null")) {
+                cpotr = " ";
+            }
+
+            //end
+
+            endIndex = userInput.indexOf("$END");
+
+            end = userInput.substring((endIndex + 6), (userInput.indexOf(",", endIndex)));
+
+            if (end != "null") {
+                end = end.substring(0,6);
+            }
+            if (end.contains("}")) {
+                end = end.substring(0, end.indexOf('}'));
+            }
+
+            if (end.startsWith("xt%")) {
+                end = "null";
+
+            }
+
+            endtr = "END (END) : " + end+"\n";
+
+            if (end.equalsIgnoreCase("null")) {
+                endtr = " ";
+            }
+
+            //str
+
+            strIndex = userInput.indexOf("$STR");
+
+            str = userInput.substring((strIndex + 6), (userInput.indexOf(",", strIndex)));
+
+            if (str != "null") {
+                str = str.substring(0,6);
+            }
+            if (str.contains("}")) {
+                str = str.substring(0, str.indexOf('}'));
+            }
+
+            if (str.startsWith("xt%")) {
+                str = "null";
+
+            }
+
+            strtr = "STR (STR) : " + str+"\n";
+
+            if (str.equalsIgnoreCase("null")) {
+                strtr = " ";
+            }
+
+            //ap
+
+            apIndex = userInput.indexOf("$ap");
+
+            ap = userInput.substring((apIndex + 5), (userInput.indexOf(",", apIndex)));
+
+            if (ap.contains("}")) {
+                ap = ap.substring(0, ap.indexOf('}'));
+            }
+
+            if (ap.startsWith("%xt%")) {
+                ap = "null";
+
+            }
+
+            aptr = "AP (AP) : " + ap+"\n";
+
+            if (ap.equalsIgnoreCase("null")) {
+                aptr = " ";
+            }
+
+            //cho
+
+            choIndex = userInput.indexOf("$cho");
+
+            cho = userInput.substring((choIndex + 6), (userInput.indexOf(",", choIndex)));
+
+            if (cho != "null") {
+                cho = cho.substring(0,6);
+            }
+            if (cho.contains("}")) {
+                cho = cho.substring(0, cho.indexOf('}'));
+            }
+
+            if (cho.startsWith("xt%")) {
+                cho = "null";
+
+            }
+
+            chotr = "Heal Out (CHO) : " + cho+"\n";
+
+            if (cho.equalsIgnoreCase("null")) {
+                chotr = " ";
+            }
+
+            //cai
+
+            caiIndex = userInput.indexOf("$cai");
+
+            cai = userInput.substring((caiIndex + 6), (userInput.indexOf(",", caiIndex)));
+
+
+            if (cai.contains("}")) {
+                cai = cai.substring(0, cai.indexOf('}'));
+            }
+
+            if (cai.startsWith("xt%")) {
+                cai = "null";
+
+            }
+
+            if (cai != "null") {
+                cai = cai.substring(0,6);
+            }
+
+            caitr = "Attack In (CAI) : " + cai+"\n";
+
+            if (cai.equalsIgnoreCase("null")) {
+                caitr = " ";
+            }
+
+            //tcr
+
+            tcrIndex = userInput.indexOf("$tcr");
+
+            tcr = userInput.substring((tcrIndex + 6), (userInput.indexOf(",", tcrIndex)));
+
+            if (tcr != "null") {
+                tcr = tcr.substring(0,6);
+            }
+            if (tcr.contains("}")) {
+                tcr = tcr.substring(0, tcr.indexOf('}'));
+            }
+
+            if (tcr.startsWith("xt%")) {
+                tcr = "null";
+
+            }
+
+            if (tcr.equalsIgnoreCase("null")) {
+                tcrtr = " ";
+            }
+
+            if (tcr != "null") {
+                double tcrD = (Double.parseDouble(tcr)) * 100;
+            }
+
+            tcrtr = "Crit Chance (TCR) : " + tcr+"%\n";
+
+            //thi
+
+            thiIndex = userInput.indexOf("$thi");
+
+            thi = userInput.substring((thiIndex + 6), (userInput.indexOf(",", thiIndex)));
+
+            if (thi != "null") {
+                thi = thi.substring(0,6);
+            }
+            if (thi.startsWith("xt%")) {
+                thi = "null";
+
+            }
+
+            thitr = "Hit Chance (THI) : " + thi+"\n";
+
+            if (thi.equalsIgnoreCase("null")) {
+                thitr = " ";
+            }
+
+            //cao
+
+            caoIndex = userInput.indexOf("$cao");
+
+            cao = userInput.substring((caoIndex + 6), (userInput.indexOf(",", caoIndex)));
+
+            if (cao != "null") {
+                cao = cao.substring(0,6);
+            }
+            if (cao.contains("}")) {
+                cao = cao.substring(0, cao.indexOf('}'));
+            }
+            if (cao.startsWith("xt%")) {
+                cao = "null";
+
+            }
+
+            caotr = "Attack Out (CAO) : " + cao+"\n";
+
+            if (cao.equalsIgnoreCase("null")) {
+                caotr = " ";
+            }
+            
+            //scm
+
+            scmIndex = userInput.indexOf("$scm");
+
+            scm = userInput.substring((scmIndex + 6), (userInput.indexOf(",", scmIndex)));
+
+            if (scm != "null") {
+                scm = scm.substring(0,6);
+            }
+            if (scm.startsWith("xt%")) {
+                scm = "null";
+
+            }
+
+            scmtr = "Crit Multiplier (SCM) : " + scm +"\n";
+
+            if (scm.equalsIgnoreCase("null")) {
+                scmtr = " ";
+            }
+
+
+
+            //cmo
+
+            cmoIndex = userInput.indexOf("$cmo");
+
+            cmo = userInput.substring((cmoIndex + 6), (userInput.indexOf(",", cmoIndex)));
+
+
+            if (cmo != "null") {
+                cmo = cmo.substring(0,6);
+            }
+            if (cmo.contains("}")) {
+                cmo = cmo.substring(0, cmo.indexOf('}'));
+            }
+
+            if (cmo.startsWith("xt%")) {
+                cmo = "null";
+
+            }
+
+            cmotr = "Magic Out (CMO) : " + cmo+"\n";
+
+            if (cmo.equalsIgnoreCase("null")) {
+                cmotr = " ";
+            }
+
+
+            String blank = "\n";
+
+
+            /*
+            message contains all aura info except not in the embed format. Useful only for testing embed issues.
+
+            message =manatr + healtr + durationtr + tdotr  +blank + aptr  + chotr  + endtr + cpotr +  thatr +
+                     strtr  + sbmtr +  caitr +  tcrtr +  thitr +  caotr +  scmtr +  cmotr;*/
+
+           //creating embed that the aura stats will be printed on
+            EmbedBuilder eAura;
+            eAura = new EmbedBuilder();
+
+            eAura.setColor(Color.orange);
+            eAura.setTitle("Aura Details: "+name);
+
+            //if the aura affects a stat, create a space in the embed for it
+            if (mana != "null") {
+                eAura.addField("Mana Cost", String.valueOf(manai), true);
+            }
+            if (heal != "null") {
+                eAura.addField("Heal", heal, true);
+            }
+            if (tdo != "null") {
+                eAura.addField("Total Dodge (TDO)", tdo, true);
+            }
+            if (ap != "null") {
+                eAura.addField("AP (AP)", ap, true);
+            }
+            if (cho != "null") {
+                eAura.addField("Heal Out (cho)", cho, true);
+            }
+            if (end != "null") {
+                eAura.addField("END (END)", end, true);
+            }
+            if (cpo != "null") {
+                eAura.addField("? (CPO)", cpo, true);
+            }
+            if (tha != "null") {
+                eAura.addField("HASTE (THA)", tha, true);
+            }
+            if (str != "null") {
+                eAura.addField("STR (STR)", str, true);
+            }
+            if (sbm != "null") {
+                eAura.addField("? (SBM)", sbm, true);
+            }
+            if (tcr != "null") {
+                eAura.addField("Crit Chance (TCR)", tcr, true);
+            }
+            if (thi != "null") {
+                eAura.addField("Hit Chance (THI)", thi, true);
+            }
+            if (cao != "null") {
+                eAura.addField("Attack Out (CAO)", cao, true);
+            }
+            if (scm != "null") {
+                eAura.addField("Crit Multiplier (SCM)", scm, true);
+            }
+            if (cmo != "null") {
+                eAura.addField("Magic Out (CMO)", cmo, true);
+            }
+            if (duration != "null") {
+                eAura.addField("Duration", duration, true);
+            }
+            if (cai != "null") {
+                eAura.addField("Damage Resist (CAI)", cai, true);
+            }
+
+            //sends message through discord.
+            e.getChannel().sendMessage(eAura.build()).queue();
+        }
+    }
+}
+
