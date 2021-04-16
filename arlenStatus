@@ -1,0 +1,15 @@
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import static net.dv8tion.jda.api.entities.Activity.ActivityType.WATCHING;
+
+public class arlenStatus extends ListenerAdapter{
+
+    public void onMessageReceived(MessageReceivedEvent e) {
+        e.getJDA().getPresence().setActivity(Activity.of(WATCHING, "your server. Type !help or ![command] help for help. Owner: Frozen#4212"));
+    }
+
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
